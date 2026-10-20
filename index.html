@@ -636,18 +636,19 @@ button,input,select,textarea{font:inherit;color:inherit}
 .print .when b{font-family:var(--script);font-weight:400;text-transform:none;letter-spacing:0;
   color:var(--navy);font-size:clamp(1.5rem,2.6vw,1.9rem);display:block;line-height:1.2}
 .print .line{font-style:italic;font-weight:500;color:var(--ink);line-height:1.5;font-size:clamp(.98rem,1.4vw,1.1rem)}
-.thread{display:flex;align-items:center;gap:8px;color:var(--gold)}
-.thread i{display:block;width:clamp(18px,3.4vw,40px);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
-.thread i:last-child{transform:scaleX(-1)}
-.thread b{font-weight:400;font-size:.9rem;line-height:1}
+/* the thread between the prints is an airmail route: Carol is in Paris */
+.thread{display:grid;justify-items:center;gap:4px;color:var(--gold)}
+.thread svg{width:clamp(70px,9vw,110px);height:auto;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round}
+.thread .route{stroke-dasharray:1.5 4}
+.thread .plane{fill:currentColor;stroke:none}
+.thread span{font-family:var(--caps);font-weight:600;font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:#6E5012;white-space:nowrap}
 /* phones: the prints stack and overlap a little, the thread turns upright */
 @media (max-width:620px){
   .pair{grid-template-columns:minmax(0,1fr);justify-items:center;gap:0}
   .print{width:min(82%,300px)}
   .print.then{justify-self:start;margin-left:4%}
   .print.now{justify-self:end;margin-right:4%;margin-top:0}
-  .thread{flex-direction:column;padding:10px 0}
-  .thread i{width:1px;height:26px;background:linear-gradient(180deg,transparent,var(--gold))}
+  .thread{padding:14px 0 10px}
 }
 @media (prefers-reduced-motion:reduce){.print{transition:none}}
 
@@ -742,8 +743,24 @@ button,input,select,textarea{font:inherit;color:inherit}
   border-radius:clamp(120px,34vw,230px) clamp(120px,34vw,230px) 6px 6px;
   padding:clamp(46px,9vw,74px) clamp(22px,4vw,38px) clamp(30px,4vw,44px);
   box-shadow:0 22px 50px rgba(13,33,73,.18);
-  display:grid;justify-items:center;gap:12px;
+  display:grid;justify-items:center;gap:12px;position:relative;
 }
+/* an airmail stamp from Paris, tucked against the card's edge */
+.air-stamp{position:absolute;right:clamp(-16px,-2vw,-8px);top:clamp(70px,19vw,118px);width:clamp(58px,9vw,72px);
+  rotate:7deg;pointer-events:none}
+.air-stamp .face{display:grid;justify-items:center;gap:2px;padding:7px 5px 5px;background:#FFFDF8;color:var(--gold);
+  /* perforated edge: a dotted mask punched round a solid core */
+  -webkit-mask:radial-gradient(circle 3px at 3px 3px,transparent 2.4px,#000 2.6px) -3px -3px/6px 6px,linear-gradient(#000,#000) center/calc(100% - 6px) calc(100% - 6px) no-repeat;
+  mask:radial-gradient(circle 3px at 3px 3px,transparent 2.4px,#000 2.6px) -3px -3px/6px 6px,linear-gradient(#000,#000) center/calc(100% - 6px) calc(100% - 6px) no-repeat;
+  filter:drop-shadow(0 4px 8px rgba(13,33,73,.18))}
+.air-stamp .face > i{display:block;width:100%;border:1px solid rgba(181,142,70,.55);padding:5px 0 3px;
+  display:grid;justify-items:center;gap:2px;font-style:normal}
+.air-stamp .eiffel{width:46%;height:auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.air-stamp .face b{font-family:var(--caps);font-weight:600;font-size:.42rem;letter-spacing:.18em;color:var(--navy)}
+.air-stamp .pm{position:absolute;left:-58%;bottom:-26%;width:84%;rotate:-14deg;color:rgba(30,60,110,.55)}
+.air-stamp .pm svg{width:100%;height:auto;overflow:visible;fill:none;stroke:currentColor;stroke-width:1}
+.air-stamp .pm text{fill:currentColor;stroke:none;font-family:var(--caps);font-weight:600;font-size:7.4px;letter-spacing:.12em}
+footer .f-avec{font-family:var(--script);color:var(--gold-soft);font-size:1.35rem;line-height:1;margin-top:-4px}
 .rsvp-mono{font-family:var(--caps);font-weight:600;font-size:clamp(1.05rem,1.8vw,1.3rem);letter-spacing:.34em;color:var(--navy)}
 .rsvp-rule{width:56px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .rsvp-title{font-family:var(--caps);font-weight:500;font-size:clamp(1.8rem,3.4vw,2.6rem);
@@ -951,7 +968,11 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
             <span class="line">One line about how and where you met.</span>
           </figcaption>
         </figure>
-        <span class="thread r" aria-hidden="true"><i></i><b>&#9829;</b><i></i></span>
+        <span class="thread r" aria-hidden="true">
+          <svg viewBox="0 0 110 34"><path class="route" d="M4 30Q55 -6 106 30"/><circle cx="4" cy="30" r="2"/><circle cx="106" cy="30" r="2"/>
+            <path class="plane" d="M55 9.4l-6.2-3 1.2-.6 7.6 1.8 4-1.6c1-.4 2-.2 2.2.4s-.4 1.3-1.4 1.7l-4 1.6-3.8 6.8-1.3.5.9-5.6-3 1.2-1.4 1.8-.9.3.4-2.6-1.6-2.1.9-.3z"/></svg>
+          <span>Mumbai &middot; Paris</span>
+        </span>
         <figure class="print now r">
           <div class="ph" style="--img:var(--story-now)" role="img" aria-label="Aaron and Carol today"></div>
           <figcaption>
@@ -1012,6 +1033,12 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
   <section class="scene plain" style="--art:var(--rsvp-p);--artl:var(--rsvp-l)">
     <div class="col">
       <div class="rsvp-card r">
+        <span class="air-stamp" aria-hidden="true">
+          <span class="face"><i><svg class="eiffel" viewBox="0 0 40 100" aria-hidden="true"><path d="M20 1v9M18 10h4M18 10l-1.6 22M22 10l1.6 22M14.5 32h11M15.6 32l-3 26M24.4 32l3 26M10 58h20M12.4 58C11 75 7 88 2 99M27.6 58C29 75 33 88 38 99M8.6 99Q20 74 31.4 99M17.6 15l4.8 6M22.4 15l-4.8 6M17.2 22l5.6 8M22.8 22l-5.6 8M15 36l10 9M25 36l-10 9M13.6 46l12.8 10M26.4 46l-12.8 10M12 64l16 0M10.4 71l19.2 0"/></svg><b>PARIS</b></i></span>
+          <span class="pm"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29"/><circle cx="32" cy="32" r="21"/>
+            <path id="pmArc" d="M8 32a24 24 0 0 1 48 0"/><text><textPath href="#pmArc" startOffset="50%" text-anchor="middle">PARIS &#183; 17 D&#201;C 2026</textPath></text>
+            <path d="M14 36h36M14 41h36M17 46h30"/></svg></span>
+        </span>
         <span class="rsvp-mono">A&nbsp;|&nbsp;C</span>
         <span class="rsvp-rule"></span>
         <h2 class="rsvp-title">RSVP</h2>
@@ -1056,6 +1083,7 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
     <span class="art-mask mono r" style="--w:120px" aria-hidden="true"></span>
     <p class="f-names r">Aaron<i>weds</i>Carol</p>
     <p class="f-sub r">17 &middot; 12 &middot; 2026 &nbsp;&middot;&nbsp; Mumbai</p>
+    <p class="f-avec r">avec amour</p>
   </footer>
 </main>
 

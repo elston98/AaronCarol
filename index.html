@@ -377,26 +377,10 @@ button,input,select,textarea{font:inherit;color:inherit}
   border-radius:16px;overflow:hidden;display:grid;
   box-shadow:0 18px 40px rgba(13,33,73,.22)}
 .rc-face{grid-area:1/1;display:grid;justify-items:center;align-content:center;gap:7px;
-  padding:clamp(18px,3vw,26px) clamp(18px,3.4vw,30px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.rc-cover{cursor:pointer;
-  background:radial-gradient(120% 120% at 30% 20%,#26518F,var(--navy) 55%,var(--navy-deep));
-  background-image:
-    radial-gradient(1.4px 1.4px at 18% 30%,rgba(232,205,150,.9),transparent),
-    radial-gradient(1.2px 1.2px at 74% 22%,rgba(232,205,150,.75),transparent),
-    radial-gradient(1.6px 1.6px at 46% 72%,rgba(232,205,150,.8),transparent),
-    radial-gradient(1.2px 1.2px at 86% 66%,rgba(232,205,150,.7),transparent),
-    radial-gradient(1.3px 1.3px at 30% 84%,rgba(232,205,150,.65),transparent),
-    radial-gradient(120% 120% at 30% 20%,#26518F,var(--navy) 55%,var(--navy-deep));
-  z-index:2}
-.rc-cover .lab{font-family:var(--caps);font-weight:600;font-size:clamp(.78rem,1.3vw,1rem);letter-spacing:.3em;
-  text-transform:uppercase;color:var(--gold-soft);display:flex;align-items:center;gap:12px}
-.rc-cover .sub{font-family:var(--script);font-size:1.35rem;color:#D9E6F6;opacity:.9;line-height:1.2}
-.reveal-card.open .rc-cover{opacity:0;transform:scale(1.06);pointer-events:none}
+  padding:clamp(18px,3vw,26px) clamp(18px,3.4vw,30px)}
 .rc-inside{background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(246,250,255,.86));
   border:1px solid rgba(255,255,255,.8);border-radius:16px;gap:6px;
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  opacity:0;transform:scale(.96)}
-.reveal-card.open .rc-inside{opacity:1;transform:none;transition-delay:.15s}
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .rc-date{font-family:var(--script);font-weight:400;color:var(--navy);letter-spacing:.01em;
   font-size:clamp(1.7rem,3.8vw,2.5rem);line-height:1.25}
 /* plain gold label, no rules — as on the reference card */
@@ -744,10 +728,7 @@ footer .mono{color:var(--gold-soft)}
 footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:#9DB7D6}
 
 /* ══════════════════ SCROLL POP ══════════════════ */
-.after-reveal{width:100%;display:grid;justify-items:center;gap:clamp(8px,1.2vw,13px);
-  opacity:0;transform:translateY(14px);pointer-events:none;
-  transition:opacity .7s var(--ease) .35s,transform .7s var(--ease) .35s}
-.after-reveal.on{opacity:1;transform:none;pointer-events:auto}
+.after-reveal{width:100%;display:grid;justify-items:center;gap:clamp(8px,1.2vw,13px)}
 .r{opacity:0;transform:translateY(26px) scale(.97)}
 .r.in{opacity:1;transform:none;transition:opacity .7s var(--ease) var(--d,0s),transform .8s var(--pop) var(--d,0s)}
 @media (prefers-reduced-motion:reduce){.r{opacity:1!important;transform:none!important}}
@@ -832,11 +813,7 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
       <p class="eyebrow r">We are getting married</p>
       <span class="heart r">&#9829;</span>
 
-      <div class="reveal-card r" id="revealCard">
-        <div class="rc-face rc-cover" id="rcCover" role="button" tabindex="0" aria-label="Click to reveal the date">
-          <span class="lab">&#10022;&nbsp; Click to reveal &nbsp;&#10022;</span>
-          <span class="sub">our special day</span>
-        </div>
+      <div class="reveal-card r">
         <div class="rc-face rc-inside">
           <span class="label-plain">Save the date</span>
           <p class="rc-date">12<sup style="font-size:.6em;top:-.5em">th</sup> January 2027</p>
@@ -844,7 +821,7 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
         </div>
       </div>
 
-      <div class="after-reveal" id="afterReveal">
+      <div class="after-reveal r">
         <span class="label-arrows"><svg viewBox="0 0 32 9" aria-hidden="true"><path d="M1 4.5h26M27 4.5l-6-3M27 4.5l-6 3"/></svg><span>The countdown begins</span><svg viewBox="0 0 32 9" aria-hidden="true"><path d="M31 4.5H5M5 4.5l6-3M5 4.5l6 3"/></svg></span>
         <div class="countdown" role="timer" aria-label="Time until the wedding">
           <div class="cd"><strong id="cd-d">&mdash;</strong><span>Days</span></div>
@@ -1259,21 +1236,6 @@ function step(){
   if(parts.length)raf=requestAnimationFrame(step);
   else{ctx.clearRect(0,0,innerWidth,innerHeight);raf=null}
 }
-
-/* ══════════ CLICK TO REVEAL ══════════ */
-(()=>{
-  const card=document.getElementById('revealCard'),cover=document.getElementById('rcCover');
-  const fire=()=>{
-    if(card.classList.contains('open'))return;
-    card.classList.add('open');
-    document.getElementById('afterReveal').classList.add('on');
-    const b=card.getBoundingClientRect();
-    celebrate(b.left+b.width/2,b.top+b.height/2);
-  };
-  cover.addEventListener('click',fire);
-  cover.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fire()}});
-})();
-
 
 /* ══════════ PETALS ══════════ */
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches){

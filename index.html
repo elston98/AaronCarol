@@ -113,7 +113,7 @@ button,input,select,textarea{font:inherit;color:inherit}
     radial-gradient(130% 85% at 22% 4%,  #DFE8F5 0%, rgba(223,232,245,0) 58%),
     radial-gradient(115% 80% at 86% 100%,#E4EBF6 0%, rgba(228,235,246,0) 62%),
     linear-gradient(168deg,#EDF2FA 0%,#F2F5FB 48%,#F7F9FC 100%);
-  transition:opacity .6s var(--ease),visibility .6s}
+  transition:opacity 1s var(--ease),visibility 1s}
 /* Four corner sprites over a stretched wash. The wash is a 64px blur of the
    artwork's centre — formless, so stretching it to any viewport shows nothing.
    The corners keep their own scale and stay pinned, which a single cover image
@@ -197,9 +197,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 #gate.opened .seal::after{animation:none;opacity:0}
 #gate.opened .env .flap{transform:translateY(-6px) scaleY(.94);opacity:0;transform-origin:top center}
 #gate.opened .env-wrap{animation:none;transform:scale(1.04);opacity:0;
-  transition:transform .45s var(--ease),opacity .35s var(--ease)}
+  transition:transform .8s var(--ease),opacity .65s var(--ease)}
 /* the words go at once; their entrance animation would otherwise hold them visible */
-#gate.opened .lead,#gate.opened .tap,#gate.opened .for-you{animation:none;opacity:0;transition:opacity .2s}
+#gate.opened .lead,#gate.opened .tap,#gate.opened .for-you{animation:none;opacity:0;transition:opacity .4s}
 
 /* the photo that greets you before the page does */
 .hello{position:absolute;left:50%;top:50%;z-index:6;
@@ -231,7 +231,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 @keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
 
 /* ══════════════════ SCENES — always full bleed ══════════════════ */
-#page{opacity:0;transition:opacity .9s var(--ease)}
+#page{opacity:0;transition:opacity 1.3s var(--ease)}
 #page.on{opacity:1}
 
 .scene{
@@ -1122,7 +1122,7 @@ function land(){
     document.body.classList.remove('locked');
     gate.style.display='none';
     try{localStorage.setItem('ac-seen','1')}catch(e){}
-  },calm?0:520);
+  },calm?0:1050);
 }
 
 function openInvite(){
@@ -1139,7 +1139,7 @@ function openInvite(){
     at(2000,()=>{gate.classList.add('fading');page.classList.add('on')});
     at(2500,land);
   }else{
-    at(220,land);                                    // the first page comes straight in
+    at(450,land);                                    // the first page eases in
   }
 }
 
@@ -1246,10 +1246,10 @@ function glitter(n=190){
   const tones=['#FFF6DC','#FFFFFF','#EBCF92','#D6B478','#FFF0C4'];
   for(let i=0;i<n;i++){
     parts.push({x:Math.random()*innerWidth,y:-10+Math.random()*innerHeight*.55,
-      vx:(Math.random()-.5)*1.2,vy:.6+Math.random()*1.8,
+      vx:(Math.random()-.5)*.8,vy:.35+Math.random()*1.1,
       w:1.8+Math.random()*2.8,h:0,rot:Math.random()*6.28,vr:(Math.random()-.5)*.2,
       c:tones[(Math.random()*tones.length)|0],life:.6+Math.random()*.4,
-      spark:true,tw:.02+Math.random()*.04,g:.012});
+      spark:true,tw:.008+Math.random()*.022,g:.006});
   }
   if(!raf)raf=requestAnimationFrame(step);
 }

@@ -657,8 +657,8 @@ button,input,select,textarea{font:inherit;color:inherit}
   padding-bottom:calc(var(--scene-w) * .509 * .9)}
 @media (max-width:819px){#ourstory{padding-bottom:calc(var(--scene-w) * .509 * .86)}}
 #ourstory::before{background:none}
-.pair{width:min(100%,800px);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
-  align-items:center;gap:clamp(6px,2vw,18px);margin-top:clamp(8px,2vw,18px)}
+.pair{width:min(100%,760px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  align-items:start;gap:clamp(18px,6vw,70px)}
 .print{margin:0;display:flex;flex-direction:column;gap:12px;
   background:#FFFDF8;border:1px solid rgba(226,218,200,.9);border-radius:3px;
   padding:clamp(9px,1.4vw,13px) clamp(9px,1.4vw,13px) clamp(16px,2.2vw,22px);
@@ -670,22 +670,27 @@ button,input,select,textarea{font:inherit;color:inherit}
 .print.now{--tilt:2.2deg;margin-top:clamp(28px,6vw,64px)}
 @media (hover:hover){.print:hover{rotate:0deg;translate:0 -4px;box-shadow:0 24px 44px rgba(16,55,110,.22)}}
 .print .ph{width:100%;aspect-ratio:4/5;border-radius:2px;background:var(--img) center/cover no-repeat,#E7F0FA}
-/* the thread between the prints is an airmail route: Carol is in Paris */
-.thread{display:grid;justify-items:center;gap:4px;color:var(--gold);padding:10px 14px;
-  /* a soft paper glow, so the route reads over the painting behind */
-  background:radial-gradient(closest-side,rgba(253,245,227,.95),rgba(253,245,227,.75) 60%,rgba(253,245,227,0))}
-.thread svg{width:clamp(70px,9vw,110px);height:auto;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round}
-.thread .route{stroke-dasharray:1.5 4}
-.thread .plane{fill:currentColor;stroke:none}
-.thread .eiffel path{stroke-width:3.4;stroke-linejoin:round}
-.thread span{font-family:var(--caps);font-weight:600;font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:#6E5012;white-space:nowrap}
-/* phones: the prints stack and overlap a little, the thread turns upright */
+/* the flight path from Florida to Paris, arcing over the two prints:
+   Aaron is in Florida and Carol in Paris */
+.route{display:block;width:min(100%,760px);height:auto;margin:clamp(2px,1vw,10px) auto clamp(-14px,-1vw,-6px);overflow:visible;color:var(--gold)}
+.route .path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-dasharray:1 9}
+.route .glow{fill:none;stroke:rgba(253,245,227,.85);stroke-width:14;stroke-linecap:round}
+.route .pin{fill:currentColor}
+.route .pin-dot{fill:#FFFDF8}
+.route .ic{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.route .eiffel path{stroke-width:2.6}
+.route text{font-family:var(--caps);font-weight:600;font-size:15px;letter-spacing:.28em;fill:#6E5012;text-transform:uppercase}
+.route .plane{fill:var(--navy);transition:opacity .5s var(--ease)}
+.route .plane.landed{opacity:0}
+@media (max-width:620px){.route text{font-size:19px}}
+/* the line draws itself as the plane flies; at rest it is fully drawn */
+.route .reveal{fill:none;stroke:#fff;stroke-width:16}
+/* phones: the prints stack in a gentle zigzag under the route */
 @media (max-width:620px){
-  .pair{grid-template-columns:minmax(0,1fr);justify-items:center;gap:0}
+  .pair{grid-template-columns:minmax(0,1fr);justify-items:center;gap:18px}
   .print{width:min(82%,300px)}
   .print.then{justify-self:start;margin-left:4%}
   .print.now{justify-self:end;margin-right:4%;margin-top:0}
-  .thread{padding:14px 0 10px}
 }
 /* the prints fade in gently; the springy scroll-in used elsewhere made the
    second one pop. `.print.r` outranks the shared `.r` rules. */
@@ -1028,18 +1033,32 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
     <div class="col wide">
       <h2 class="title r">Our Story</h2>
       <div class="orn r"><span>&#10086;</span></div>
-      <p class="lede r">From different paths, to the same destination.</p>
+      <p class="lede r">From Florida to Paris, two hearts, one forever.</p>
+
+      <svg class="route r" id="route" viewBox="0 0 760 170" role="img" aria-label="A flight path from Florida to Paris">
+        <defs><mask id="routeMask" maskUnits="userSpaceOnUse" x="-20" y="-20" width="800" height="210">
+          <path class="reveal" id="routeReveal" d="M190 128C300 6 460 6 570 128"/></mask></defs>
+        <path class="glow" d="M190 128C300 6 460 6 570 128"/>
+        <path class="path" id="routePath" d="M190 128C300 6 460 6 570 128" mask="url(#routeMask)"/>
+        <!-- Florida: a pin and a palm -->
+        <g transform="translate(190 128)">
+          <path class="pin" d="M0 6c-6-8-11-12-11-18a11 11 0 0122 0c0 6-5 10-11 18z"/><circle class="pin-dot" cy="-12" r="4"/>
+          <g class="ic" transform="translate(-58 -40)"><path d="M14 40c1-11 1-20-2-28"/><path d="M12 12c-4-4-10-5-14-2 5 0 9 1 12 4M12 12c1-6 6-9 11-8-4 1-8 4-9 9M12 12c-6-1-11 2-12 7 3-4 7-5 11-4M12 12c6-2 11 0 13 5-4-3-8-3-12-2"/></g>
+          <text x="0" y="34" text-anchor="middle">Florida</text>
+        </g>
+        <!-- Paris: a pin and the Eiffel Tower -->
+        <g transform="translate(570 128)">
+          <path class="pin" d="M0 6c-6-8-11-12-11-18a11 11 0 0122 0c0 6-5 10-11 18z"/><circle class="pin-dot" cy="-12" r="4"/>
+          <g class="ic eiffel" transform="translate(26 -44) scale(.44)"><path d="M20 1v9M18 10h4M18 10l-1.6 22M22 10l1.6 22M14.5 32h11M15.6 32l-3 26M24.4 32l3 26M10 58h20M12.4 58C11 75 7 88 2 99M27.6 58C29 75 33 88 38 99M8.6 99Q20 74 31.4 99M17.6 15l4.8 6M22.4 15l-4.8 6M17.2 22l5.6 8M22.8 22l-5.6 8M15 36l10 9M25 36l-10 9M13.6 46l12.8 10M26.4 46l-12.8 10M12 64l16 0M10.4 71l19.2 0"/></g>
+          <text x="0" y="34" text-anchor="middle">Paris</text>
+        </g>
+        <path class="plane" id="routePlane" d="M0 0l-6.2-3 1.2-.6 7.6 1.8 4-1.6c1-.4 2-.2 2.2.4s-.4 1.3-1.4 1.7l-4 1.6-3.8 6.8-1.3.5.9-5.6-3 1.2-1.4 1.8-.9.3.4-2.6-1.6-2.1.9-.3z" transform="translate(380 37)"/>
+      </svg>
 
       <div class="pair">
         <figure class="print then r">
           <div class="ph" style="--img:var(--story-then)" role="img" aria-label="Aaron and Carol walking together along a palm-lined path"></div>
         </figure>
-        <span class="thread r" aria-hidden="true">
-          <svg viewBox="0 0 110 34"><path class="route" d="M4 30Q55 -6 100 26"/><circle cx="4" cy="30" r="2"/>
-            <g class="eiffel" transform="translate(97 4) scale(.3)"><path d="M20 1v9M18 10h4M18 10l-1.6 22M22 10l1.6 22M14.5 32h11M15.6 32l-3 26M24.4 32l3 26M10 58h20M12.4 58C11 75 7 88 2 99M27.6 58C29 75 33 88 38 99M8.6 99Q20 74 31.4 99M17.6 15l4.8 6M22.4 15l-4.8 6M17.2 22l5.6 8M22.8 22l-5.6 8M15 36l10 9M25 36l-10 9M13.6 46l12.8 10M26.4 46l-12.8 10M12 64l16 0M10.4 71l19.2 0"/></g>
-            <path class="plane" d="M55 9.4l-6.2-3 1.2-.6 7.6 1.8 4-1.6c1-.4 2-.2 2.2.4s-.4 1.3-1.4 1.7l-4 1.6-3.8 6.8-1.3.5.9-5.6-3 1.2-1.4 1.8-.9.3.4-2.6-1.6-2.1.9-.3z"/></svg>
-          <span>Florida &middot; Paris</span>
-        </span>
         <figure class="print now r">
           <div class="ph" style="--img:var(--story-now)" role="img" aria-label="Aaron and Carol holding hands, her engagement ring in view"></div>
         </figure>
@@ -1253,6 +1272,34 @@ function reveals(){
   }),{threshold:.12,rootMargin:'0px 0px -5% 0px'});
   document.querySelectorAll('.r').forEach(el=>io.observe(el));
 }
+
+/* ══════════ OUR STORY — the flight from Florida to Paris ══════════ */
+(()=>{
+  const svg=document.getElementById('route'); if(!svg) return;
+  const path=document.getElementById('routePath'), reveal=document.getElementById('routeReveal');
+  const plane=document.getElementById('routePlane'), len=path.getTotalLength();
+  const place=k=>{
+    const p=path.getPointAtLength(len*k), q=path.getPointAtLength(Math.min(len,len*k+1));
+    const a=Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI;
+    plane.setAttribute('transform',`translate(${p.x} ${p.y}) rotate(${a}) translate(-6 -3)`);
+    reveal.style.strokeDasharray=`${len} ${len}`; reveal.style.strokeDashoffset=len*(1-k);
+  };
+  // phones: zoom in on the arc so the pins and names stay legible
+  const fit=()=>svg.setAttribute('viewBox',innerWidth<=620?'100 0 560 175':'0 0 760 170');
+  fit(); addEventListener('resize',fit);
+  place(.5);                                   // at rest: drawn in full, plane mid-flight
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){ place(1); return }
+  let raf=null;
+  const fly=()=>{
+    cancelAnimationFrame(raf); const t0=performance.now(), dur=2600;
+    plane.classList.remove('landed');
+    // the plane lands just short of the Paris pin, then fades away
+    const step=t=>{ const k=Math.min(1,(t-t0)/dur), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+      place(e*.93); if(k<1) raf=requestAnimationFrame(step); else { place(1); plane.classList.add('landed') } };
+    raf=requestAnimationFrame(step);
+  };
+  new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) fly() }),{threshold:.5}).observe(svg);
+})();
 
 /* ══════════ COUNTDOWN ══════════ */
 const target=new Date(WEDDING_DATE).getTime(),pad=n=>String(n).padStart(2,'0');

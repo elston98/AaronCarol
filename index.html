@@ -670,12 +670,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 .print.now{--tilt:2.2deg;margin-top:clamp(28px,6vw,64px)}
 @media (hover:hover){.print:hover{rotate:0deg;translate:0 -4px;box-shadow:0 24px 44px rgba(16,55,110,.22)}}
 .print .ph{width:100%;aspect-ratio:4/5;border-radius:2px;background:var(--img) center/cover no-repeat,#E7F0FA}
-.print figcaption{display:grid;gap:4px;text-align:center;padding:0 4px}
-.print .when{font-family:var(--caps);font-weight:600;font-size:clamp(.62rem,.9vw,.72rem);letter-spacing:.28em;
-  text-transform:uppercase;color:#6E5012}
-.print .when b{font-family:var(--script);font-weight:400;text-transform:none;letter-spacing:0;
-  color:var(--navy);font-size:clamp(1.5rem,2.6vw,1.9rem);display:block;line-height:1.2}
-.print .line{font-style:italic;font-weight:500;color:var(--ink);line-height:1.5;font-size:clamp(.98rem,1.4vw,1.1rem)}
 /* the thread between the prints is an airmail route: Carol is in Paris */
 .thread{display:grid;justify-items:center;gap:4px;color:var(--gold);padding:10px 14px;
   /* a soft paper glow, so the route reads over the painting behind */
@@ -1039,10 +1033,6 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
       <div class="pair">
         <figure class="print then r">
           <div class="ph" style="--img:var(--story-then)" role="img" aria-label="Aaron and Carol walking together along a palm-lined path"></div>
-          <figcaption>
-            <span class="when"><b>How it began</b>2015</span>
-            <span class="line">One line about how and where you met.</span>
-          </figcaption>
         </figure>
         <span class="thread r" aria-hidden="true">
           <svg viewBox="0 0 110 34"><path class="route" d="M4 30Q55 -6 100 26"/><circle cx="4" cy="30" r="2"/>
@@ -1052,10 +1042,6 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
         </span>
         <figure class="print now r">
           <div class="ph" style="--img:var(--story-now)" role="img" aria-label="Aaron and Carol holding a bouquet of pink roses, her engagement ring in view"></div>
-          <figcaption>
-            <span class="when"><b>Where we are</b>2026</span>
-            <span class="line">One line about today, and the forever ahead.</span>
-          </figcaption>
         </figure>
       </div>
     </div>

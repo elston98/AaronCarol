@@ -415,6 +415,34 @@ button,input,select,textarea{font:inherit;color:inherit}
 .script-line i{font-style:normal;color:var(--gold);font-size:.5em}
 
 /* floating monogram, always in view */
+/* ══════════════════ MUSIC ══════════════════ */
+/* a navy round button at the foot of the screen, shown once the song starts */
+.music{position:fixed;z-index:80;
+  right:max(16px,calc(env(safe-area-inset-right,0px) + 12px));
+  bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 12px));
+  width:48px;height:48px;border-radius:50%;border:1px solid rgba(214,180,120,.55);padding:0;cursor:pointer;
+  display:grid;place-items:center;color:#F4E9D2;
+  background:linear-gradient(180deg,var(--navy),var(--navy-deep));
+  box-shadow:0 8px 20px rgba(13,33,73,.3);
+  opacity:0;transform:translateY(10px);pointer-events:none;
+  transition:opacity .5s var(--ease),transform .5s var(--ease),background .3s}
+.music.on{opacity:1;transform:none;pointer-events:auto}
+.music:hover{background:linear-gradient(180deg,#1E4483,var(--navy))}
+.music:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.music svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.music .off{display:none}
+.music.muted .on-ic{display:none}
+.music.muted .off{display:block}
+/* three small bars that rise and fall while the song plays */
+.music .eq{position:absolute;top:-6px;right:-4px;display:flex;align-items:flex-end;gap:2px;height:12px;
+  padding:2px 3px;border-radius:6px;background:var(--navy-deep)}
+.music .eq i{width:2px;background:var(--gold-soft);border-radius:1px;animation:eq 1s ease-in-out infinite}
+.music .eq i:nth-child(2){animation-delay:-.35s}
+.music .eq i:nth-child(3){animation-delay:-.7s}
+@keyframes eq{0%,100%{height:3px}50%{height:8px}}
+.music.muted .eq{display:none}
+@media (prefers-reduced-motion:reduce){.music .eq i{animation:none;height:6px}}
+
 .float-logo{position:fixed;top:max(12px,env(safe-area-inset-top));left:50%;z-index:70;
   width:clamp(72px,10vw,104px);aspect-ratio:800/454;background:var(--gold);
   -webkit-mask:var(--mono-ac) center/contain no-repeat;mask:var(--mono-ac) center/contain no-repeat;
@@ -1083,6 +1111,13 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
   </footer>
 </main>
 
+<audio id="song" src="music/marry-you.mp3" preload="metadata" loop></audio>
+<button class="music" id="musicBtn" type="button" aria-label="Mute music" aria-pressed="false">
+  <svg class="on-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 010 6M18 6.5a7.5 7.5 0 010 11"/></svg>
+  <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
+  <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+</button>
+
 <script>
 /* the browser restores the previous scroll position on reload by default —
    which, combined with the envelope sitting fixed on top of the page,
@@ -1142,9 +1177,43 @@ function land(){
   },calm?0:900);
 }
 
+/* ══════════ MUSIC — starts with the tap on the seal ══════════ */
+const song=document.getElementById('song'), musicBtn=document.getElementById('musicBtn');
+let fader=null;
+function fadeTo(target,ms){
+  clearInterval(fader);
+  const start=song.volume, t0=performance.now();
+  fader=setInterval(()=>{
+    const k=Math.min(1,(performance.now()-t0)/ms);
+    song.volume=start+(target-start)*k;
+    if(k>=1)clearInterval(fader);
+  },40);
+}
+function startMusic(){
+  // browsers only allow sound after a tap, so this runs inside the seal's click
+  song.volume=0;
+  const p=song.play();
+  if(p&&p.then) p.then(()=>{ fadeTo(.7,1800); musicBtn.classList.add('on') }).catch(()=>{});
+  else musicBtn.classList.add('on');
+}
+musicBtn.addEventListener('click',()=>{
+  const mute=!song.muted;
+  song.muted=mute;
+  if(!mute&&song.paused) song.play().catch(()=>{});
+  musicBtn.classList.toggle('muted',mute);
+  musicBtn.setAttribute('aria-pressed',String(mute));
+  musicBtn.setAttribute('aria-label',mute?'Play music':'Mute music');
+});
+// pause while the page is hidden (a locked phone, another tab), resume on return
+document.addEventListener('visibilitychange',()=>{
+  if(!musicBtn.classList.contains('on'))return;
+  if(document.hidden) song.pause(); else if(!song.muted) song.play().catch(()=>{});
+});
+
 function openInvite(){
   if(opened){ land(); return }            // pressing again skips ahead
   opened=true;
+  startMusic();
   const r=seal.getBoundingClientRect();
   const sx=r.left+r.width/2, sy=r.top+r.height/2;
   gate.classList.add('opened');           // the seal flares and glitter bursts out

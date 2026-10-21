@@ -647,13 +647,15 @@ button,input,select,textarea{font:inherit;color:inherit}
    section's bottom padding reserves the scene's height (its width x 712/1400)
    so the title and prints always stay on the plain sky above it */
 #ourstory{
-  --scene-w:max(100vw,900px);
+  /* the full width of the painting always fits, so the grotto at its left
+     edge and the tower at its right are never cut off */
+  --scene-w:100vw;
   background:
     var(--story-top) center top/max(100vw,760px) auto no-repeat,
     var(--story-scene) center bottom/var(--scene-w) auto no-repeat,
     #FDF5E3;
   padding-bottom:calc(var(--scene-w) * .509 * .9)}
-@media (max-width:819px){#ourstory{--scene-w:max(100vw,560px);padding-bottom:calc(var(--scene-w) * .509 * .8)}}
+@media (max-width:819px){#ourstory{padding-bottom:calc(var(--scene-w) * .509 * .86)}}
 #ourstory::before{background:none}
 .pair{width:min(100%,800px);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
   align-items:center;gap:clamp(6px,2vw,18px);margin-top:clamp(8px,2vw,18px)}

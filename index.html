@@ -462,13 +462,12 @@ button,input,select,textarea{font:inherit;color:inherit}
   
 }
 @keyframes floaty{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
-/* ── page 1, scaled up: a larger monogram set a little lower, and larger
-   type lifted toward it so the copy fills the paper ── */
-.float-logo{width:clamp(104px,13vw,150px);top:max(28px,calc(env(safe-area-inset-top) + 20px))}
-#hero{align-content:start;padding-top:clamp(150px,22vh,210px)}
+/* ── page 1: the monogram set a little lower, and larger type lifted toward
+   it so the copy fills the paper (the monogram and the names keep their
+   original sizes) ── */
+.float-logo{top:max(28px,calc(env(safe-area-inset-top) + 20px))}
+#hero{align-content:start;padding-top:clamp(130px,19vh,180px)}
 #hero .col{padding-top:0;gap:clamp(10px,1.6vw,16px)}
-#hero .names .n{font-size:clamp(3.1rem,8.4vw,5.8rem)}
-#hero .names .w{font-size:clamp(1.4rem,3.4vw,2.3rem)}
 #hero .label-arrows span{font-size:clamp(.8rem,1.15vw,1rem)}
 #hero .countdown{width:min(100%,520px)}
 #hero .cd strong{font-size:clamp(1.9rem,5.4vw,2.7rem)}
@@ -476,11 +475,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 #hero .script-line{font-size:clamp(1.4rem,2.8vw,1.9rem)}
 #hero .lede{font-size:clamp(1.12rem,1.6vw,1.32rem)}
 @media (max-width:819px){
-  .float-logo.on{width:clamp(130px,38vw,175px);margin-top:16%}
-  #hero{padding-top:calc(clamp(130px,38vw,175px) * .57 + 16vw + 58px)}
+  .float-logo.on{margin-top:16%}
+  #hero{padding-top:calc(clamp(96px,26vw,130px) * .57 + 16vw + 50px)}
   #hero .col{gap:clamp(12px,3.4vw,18px)}
-  #hero .names .n{font-size:clamp(3.1rem,14vw,4rem)}
-  #hero .names .w{font-size:clamp(1.35rem,5.8vw,1.8rem)}
   #hero .cd strong{font-size:clamp(2rem,8vw,2.5rem)}
   #hero .script-line{font-size:clamp(1.45rem,6vw,1.8rem)}
   #hero .lede{font-size:clamp(1.12rem,4.6vw,1.3rem)}

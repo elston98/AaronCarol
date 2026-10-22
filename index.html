@@ -425,8 +425,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* floating monogram, always in view */
 /* ══════════════════ MUSIC ══════════════════ */
 /* a navy round button at the foot of the screen, shown once the song starts */
-/* above the envelope page (120), so it can be muted from there too */
-.music{position:fixed;z-index:140;
+.music{position:fixed;z-index:80;
   right:max(16px,calc(env(safe-area-inset-right,0px) + 12px));
   bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 12px));
   width:48px;height:48px;border-radius:50%;border:1px solid rgba(214,180,120,.55);padding:0;cursor:pointer;
@@ -1251,22 +1250,13 @@ function fadeTo(target,ms){
     if(k>=1)clearInterval(fader);
   },40);
 }
-let musicOn=false;
 function startMusic(){
-  if(musicOn) return;
+  // browsers only allow sound after a tap, so this runs inside the seal's click
   song.volume=0;
   const p=song.play();
-  const ok=()=>{ musicOn=true; fadeTo(.7,1800); musicBtn.classList.add('on'); stopWaiting() };
-  if(p&&p.then) p.then(ok).catch(()=>{}); else ok();
+  if(p&&p.then) p.then(()=>{ fadeTo(.7,1800); musicBtn.classList.add('on') }).catch(()=>{});
+  else musicBtn.classList.add('on');
 }
-/* Browsers only allow sound once the visitor has touched the page. So the
-   music is tried as soon as the envelope page opens (some browsers allow it
-   on a site the guest has visited before), and otherwise starts on the first
-   tap, click or key press anywhere on the envelope page. */
-const firstTouch=['pointerdown','touchend','keydown'];
-function stopWaiting(){ firstTouch.forEach(t=>removeEventListener(t,startMusic,true)) }
-firstTouch.forEach(t=>addEventListener(t,startMusic,true));
-startMusic();
 musicBtn.addEventListener('click',()=>{
   const mute=!song.muted;
   song.muted=mute;

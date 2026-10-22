@@ -723,15 +723,13 @@ button,input,select,textarea{font:inherit;color:inherit}
   .print.then{justify-self:start;margin-left:4%}
   .print.now{justify-self:end;margin-right:4%;margin-top:0}
 }
-/* the prints fade up softly as they scroll into view. They have their own
-   observer (below), which starts the fade just before each print reaches the
-   screen, with no delay, on an even ease-in-out over 1.4s. */
-.print.fade{opacity:0;translate:0 26px}
-.print.fade.in{opacity:1;translate:0 0;
-  transition:opacity 1.4s cubic-bezier(.45,0,.25,1),translate 1.4s cubic-bezier(.45,0,.25,1),rotate .5s var(--pop),box-shadow .5s var(--ease)}
-@media (hover:hover){.print.fade.in:hover{translate:0 -4px}}
-/* reduced motion: no movement, but still a gentle fade */
-@media (prefers-reduced-motion:reduce){.print.fade{translate:none}.print.fade.in{transition:opacity 1s ease}}
+/* the prints fade in with the scroll itself: each one's opacity and rise
+   follow how far it has come up the screen (set by the script below as
+   --k, from 0 to 1), so scrolling slowly fades it slowly, and scrolling
+   back up fades it out again */
+.print.fade{opacity:var(--k,1);translate:0 calc((1 - var(--k,1)) * 36px)}
+@media (hover:hover){.print.fade:hover{translate:0 -4px}}
+@media (prefers-reduced-motion:reduce){.print.fade{translate:none}}
 
 /* ══════════════════ THE CELEBRATION — arched windows ══════════════════ */
 /* the blue watercolour florals from the envelope page frame this section */
@@ -1330,14 +1328,25 @@ function reveals(){
   new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) fly() }),{threshold:.5}).observe(svg);
 })();
 
-/* ══════════ OUR STORY — the prints fade up as they arrive ══════════ */
+/* ══════════ OUR STORY — the prints fade in with the scroll ══════════ */
 (()=>{
-  const prints=document.querySelectorAll('.print.fade'); if(!prints.length) return;
-  const io=new IntersectionObserver(es=>es.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add('in');
-    else if(e.boundingClientRect.top>0) e.target.classList.remove('in');   // replays when scrolled back up past it
-  }),{rootMargin:'0px 0px 8% 0px',threshold:0});
-  prints.forEach(p=>io.observe(p));
+  const prints=[...document.querySelectorAll('.print.fade')]; if(!prints.length) return;
+  let queued=false;
+  const update=()=>{
+    queued=false;
+    const h=innerHeight;
+    prints.forEach(p=>{
+      const r=p.getBoundingClientRect();
+      // 0 while its top is at the bottom of the screen, 1 once it has
+      // risen 45% of the screen height
+      const k=Math.min(1,Math.max(0,(h-r.top)/(h*.45)));
+      p.style.setProperty('--k',k.toFixed(3));
+    });
+  };
+  const queue=()=>{ if(!queued){ queued=true; requestAnimationFrame(update) } };
+  addEventListener('scroll',queue,{passive:true});
+  addEventListener('resize',queue);
+  update();
 })();
 
 /* ══════════ COUNTDOWN ══════════ */

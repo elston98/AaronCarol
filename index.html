@@ -836,7 +836,7 @@ form{width:100%;display:grid;gap:13px;text-align:left;margin-top:6px}
 .errmsg{display:none;font-size:.78rem;color:#BE5540}
 .field.err .errmsg{display:block}
 .chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.chip{min-width:0;text-align:center;cursor:pointer;padding:12px 6px;border-radius:26px;
+.chip{min-width:0;text-align:center;cursor:pointer;padding:10px 6px;border-radius:26px;line-height:1.25;
   border:1px solid rgba(181,142,70,.35);background:rgba(255,255,255,.92);color:var(--ink);
   font-size:1.02rem;transition:all .25s var(--ease)}
 .chip input{position:absolute;opacity:0;width:0;height:0}
@@ -1100,8 +1100,8 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
           <div class="field">
             <label>Will you be attending?</label>
             <div class="chips" role="radiogroup" aria-label="Will you be attending?">
-              <label class="chip on"><input type="radio" name="attending" value="Joyfully accepts" checked>Joyfully Accept</label>
-              <label class="chip"><input type="radio" name="attending" value="Regretfully declines">Regretfully Decline</label>
+              <label class="chip on"><input type="radio" name="attending" value="Joyfully accepts" checked>Joyfully<br>Accept</label>
+              <label class="chip"><input type="radio" name="attending" value="Regretfully declines">Regretfully<br>Decline</label>
             </div>
           </div>
           <div class="field" id="f-guests">

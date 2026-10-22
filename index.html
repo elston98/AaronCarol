@@ -520,8 +520,14 @@ button,input,select,textarea{font:inherit;color:inherit}
    go dead at the foot is shared above and below the couple instead. */
 #fams{align-content:stretch;padding-block:clamp(34px,6vh,80px)}
 #fams .col{display:flex;flex-direction:column;align-items:center;height:100%}
-#fams .families{margin-top:auto}
+/* the heading and the families sit together as one group, centred in the
+   section, with a single line's space between the heading and the names */
+#fams .col > :first-child{margin-top:auto}
+#fams .families{margin-top:1.2em}
 #fams .col > svg:last-child{margin-bottom:auto}
+/* the heading reads on one line: "A celebration of love, faith & forever" */
+#fams .titlewrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:0 .32em;text-align:center}
+#fams .titlewrap .title-script{margin-top:0}
 #fams .col{gap:clamp(10px,1.4vw,16px)}
 /* page two carries a larger scale now that the wash gives it room */
 #fams .title{font-size:clamp(1.3rem,2.5vw,1.8rem)}

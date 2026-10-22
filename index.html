@@ -271,7 +271,7 @@ button,input,select,textarea{font:inherit;color:inherit}
     background-size:118% auto,124% auto;
   }
   #fams{
-    padding-top:clamp(26px,4vh,52px);
+    padding-block:clamp(26px,4vh,52px);
     background-color:#FEF5E3;
     background-image:var(--sky-top),var(--sky-scene);
     background-position:center top,center bottom;
@@ -522,9 +522,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 #fams .col{display:flex;flex-direction:column;align-items:center;height:100%}
 /* the heading and the families sit together as one group, centred in the
    section, with a single line's space between the heading and the names */
-#fams .col > :first-child{margin-top:auto}
+#fams .col{justify-content:center}
 #fams .families{margin-top:1.2em}
-#fams .col > svg:last-child{margin-bottom:auto}
 /* the heading reads on one line: "A celebration of love, faith & forever" */
 #fams .titlewrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:0 .32em;text-align:center}
 #fams .titlewrap .title-script{margin-top:0;color:var(--navy)}

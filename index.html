@@ -694,8 +694,11 @@ button,input,select,textarea{font:inherit;color:inherit}
   padding-bottom:calc(var(--scene-w) * .509 * .9)}
 @media (max-width:819px){#ourstory{padding-bottom:calc(var(--scene-w) * .509 * .86)}}
 #ourstory::before{background:none}
-.pair{width:min(100%,900px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  align-items:start;gap:clamp(16px,4vw,48px)}
+/* one print on top, then two side by side beneath it */
+.pair{width:min(100%,560px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:start;justify-items:center;gap:clamp(14px,3vw,26px) clamp(14px,4vw,34px)}
+.pair .print{width:min(100%,240px)}
+.pair .print.then{grid-column:1 / -1}
 .print{margin:0;display:flex;flex-direction:column;gap:12px;
   background:#FFFDF8;border:1px solid rgba(226,218,200,.9);border-radius:3px;
   padding:clamp(9px,1.4vw,13px) clamp(9px,1.4vw,13px) clamp(16px,2.2vw,22px);
@@ -704,8 +707,8 @@ button,input,select,textarea{font:inherit;color:inherit}
      owns `transform`) doesn't straighten the prints */
   rotate:var(--tilt);transition:rotate .5s var(--pop),translate .5s var(--pop),box-shadow .5s var(--ease)}
 .print.then{--tilt:-2.6deg}
-.print.now{--tilt:2.2deg;margin-top:clamp(28px,6vw,64px)}
-.print.next{--tilt:-1.6deg}
+.print.now{--tilt:2.2deg}
+.print.next{--tilt:-1.6deg;margin-top:clamp(14px,3vw,26px)}
 /* the third print, until its photo arrives: a soft wash with a small camera */
 .ph.placeholder{display:grid;place-content:center;justify-items:center;gap:8px;color:#8A6A1F;
   background:linear-gradient(160deg,#F6EEDC,#EDE2C8)}
@@ -715,14 +718,14 @@ button,input,select,textarea{font:inherit;color:inherit}
 .print .ph{width:100%;aspect-ratio:4/5;border-radius:2px;background:var(--img) center/cover no-repeat,#E7F0FA}
 /* the flight path from Florida to Paris, arcing over the two prints:
    Aaron is in Florida and Carol in Paris */
-.route{display:block;width:min(100%,900px);height:auto;margin:clamp(2px,1vw,10px) auto clamp(-14px,-1vw,-6px);overflow:visible;color:var(--gold)}
+.route{display:block;width:min(100%,620px);height:auto;margin:clamp(2px,1vw,10px) auto clamp(-14px,-1vw,-6px);overflow:visible;color:var(--gold)}
 .route .path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-dasharray:1 9}
 .route .glow{fill:none;stroke:rgba(253,245,227,.85);stroke-width:14;stroke-linecap:round}
 .route .pin{fill:currentColor}
 .route .pin-dot{fill:#FFFDF8}
 .route .ic{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .route .eiffel path{stroke-width:2.6}
-.route text{font-family:var(--caps);font-weight:600;font-size:15px;letter-spacing:.28em;fill:#6E5012;text-transform:uppercase}
+.route text{font-family:var(--caps);font-weight:600;font-size:20px;letter-spacing:.28em;fill:#6E5012;text-transform:uppercase}
 .route .plane{fill:var(--navy);transition:opacity .5s var(--ease)}
 .route .plane.landed{opacity:0}
 @media (max-width:620px){.route text{font-size:24px}.route .pin,.route .ic{transform-box:fill-box;transform-origin:50% 100%;scale:1.25}}
@@ -730,11 +733,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .route .reveal{fill:none;stroke:#fff;stroke-width:16}
 /* phones: the prints stack in a gentle zigzag under the route */
 @media (max-width:620px){
-  .pair{grid-template-columns:minmax(0,1fr);justify-items:center;gap:18px}
-  .print{width:min(82%,300px)}
-  .print.then{justify-self:start;margin-left:4%}
-  .print.now{justify-self:end;margin-right:4%;margin-top:0}
-  .print.next{justify-self:start;margin-left:4%}
+  .pair .print.then{width:min(62%,220px)}
+  .pair .print.now,.pair .print.next{width:100%}
+  .pair{margin-bottom:22px}
 }
 /* the prints fade in with the scroll itself: each one's opacity and rise
    follow how far it has come up the screen (set by the script below as

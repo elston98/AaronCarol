@@ -522,7 +522,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 #fams .col{display:flex;flex-direction:column;align-items:center;height:100%}
 /* the heading and the families sit together as one group, centred in the
    section, with a single line's space between the heading and the names */
-#fams .col{justify-content:center}
+/* the heading and families start in the upper part of the page, above the skyline */
+#fams .col{justify-content:flex-start;padding-top:clamp(28px,8vh,90px)}
 #fams .families{margin-top:1.2em}
 /* the heading reads on one line: "A celebration of love, faith & forever" */
 #fams .titlewrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:0 .32em;text-align:center}

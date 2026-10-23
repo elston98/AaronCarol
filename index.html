@@ -1174,7 +1174,7 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
   </footer>
 </main>
 
-<audio id="song" src="music/marry-you.mp3" preload="metadata" loop></audio>
+<audio id="song" src="music/marry-you.mp3#t=10.5" preload="metadata"></audio>
 <button class="music" id="musicBtn" type="button" aria-label="Mute music" aria-pressed="false">
   <svg class="on-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 010 6M18 6.5a7.5 7.5 0 010 11"/></svg>
   <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
@@ -1262,8 +1262,13 @@ function fadeTo(target,ms){
     if(k>=1)clearInterval(fader);
   },40);
 }
+// the track is used as supplied; playback starts 10.5s in, where the guitar
+// is under way, and each loop returns to that point rather than the silent start
+const SONG_START=10.5;
+song.addEventListener('ended',()=>{ song.currentTime=SONG_START; song.play().catch(()=>{}) });
 function startMusic(){
   // browsers only allow sound after a tap, so this runs inside the seal's click
+  if(song.currentTime<SONG_START) try{ song.currentTime=SONG_START }catch(e){}
   song.volume=0;
   const p=song.play();
   if(p&&p.then) p.then(()=>{ fadeTo(.7,1800); musicBtn.classList.add('on') }).catch(()=>{});

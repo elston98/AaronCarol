@@ -1212,7 +1212,13 @@ const guest=(()=>{
   return v;
 })();
 if(guest){
-  document.getElementById('gateName').textContent=guest;
+  // the script face draws a capital A as a loop that reads as a lowercase a,
+  // so each capital A in the name gets the pointed A used for Aaron
+  const gn=document.getElementById('gateName');
+  guest.split(/(A)/).forEach(part=>{
+    if(part==='A'){const a=document.createElement('span');a.className='cap-a';a.textContent='A';gn.appendChild(a)}
+    else if(part) gn.appendChild(document.createTextNode(part));
+  });
   document.getElementById('gateTo').hidden=false;
   const g=document.getElementById('greeting');
   g.textContent='Dear '+guest+',';g.hidden=true;

@@ -1203,9 +1203,12 @@ const guest=(()=>{
   const q=new URLSearchParams(location.search);
   let v=(q.get('to')||q.get('guest')||q.get('name')||'').trim();
   if(!v)return '';
-  v=v.replace(/[<>]/g,'').slice(0,60);
+  v=v.replace(/[<>]/g,'').replace(/\s+/g,' ').slice(0,60);
+  // all in one case ("rahul sharma", "RAHUL SHARMA") becomes "Rahul Sharma"
   if(v===v.toLowerCase()||v===v.toUpperCase())
     v=v.replace(/\b[\p{L}][\p{L}'’-]*/gu,w=>w[0].toUpperCase()+w.slice(1).toLowerCase());
+  // and every word always starts with a capital ("rahul D'souza" → "Rahul D'souza")
+  v=v.replace(/(^|[\s(&+\/-])(\p{L})/gu,(m,a,b)=>a+b.toUpperCase());
   return v;
 })();
 if(guest){

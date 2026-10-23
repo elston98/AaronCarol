@@ -884,8 +884,6 @@ form{width:100%;display:grid;gap:13px;text-align:left;margin-top:6px}
 .sent{display:none;justify-items:center;gap:10px;text-align:center}
 .sent.show{display:grid;animation:rise .6s var(--ease)}
 .sent .ty{font-family:var(--script);font-size:2.2rem;color:var(--navy)}
-.linkbtn{background:none;border:none;cursor:pointer;color:var(--gold);font-family:var(--caps);
-  font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border-bottom:1px solid rgba(181,142,70,.5)}
 
 /* ══════════════════ FOOTER ══════════════════ */
 footer{display:grid;justify-items:center;gap:14px;text-align:center;
@@ -1157,7 +1155,6 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
         <div class="sent" id="sent">
           <span class="ty">Thank you</span>
           <p class="note">Your reply is on its way. We cannot wait to celebrate with you.</p>
-          <button class="linkbtn" id="againBtn" type="button">Reply for someone else</button>
         </div>
       </div>
     </div>
@@ -1606,15 +1603,6 @@ function wa(r){
   if(r.note)l.push('Note: '+r.note);
   window.open('https://wa.me/'+RSVP_WHATSAPP+'?text='+encodeURIComponent(l.join('\n')),'_blank');
 }
-/* a deliberate second reply — for a partner or a relative — is still allowed,
-   but it takes a click; a refresh on its own never reopens the form */
-document.getElementById('againBtn').addEventListener('click',()=>{
-  form.reset();form.style.display='';
-  document.getElementById('sent').querySelector('.ty').textContent='Thank you';
-  document.querySelectorAll('.field').forEach(f=>f.classList.remove('err'));
-  document.getElementById('sent').classList.remove('show');
-  document.getElementById('rName').focus();
-});
 </script>
 </body>
 </html>

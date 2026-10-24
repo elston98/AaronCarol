@@ -463,12 +463,14 @@ button,input,select,textarea{font:inherit;color:inherit}
   filter:drop-shadow(0 3px 7px rgba(255,255,255,.9)) drop-shadow(0 6px 14px rgba(16,55,110,.22));
   opacity:0;pointer-events:none;transform:translate(-50%,-14px);
   transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.float-logo.on{opacity:1;transform:translate(-50%,0);animation:floaty 5.5s ease-in-out 1s infinite}
+/* once the page is open the monogram stays put and its opacity follows the
+   scroll (--vis, from 1 at the top to 0 a third of a screen down), so it
+   fades smoothly instead of switching off */
+.float-logo.on{opacity:var(--vis,1);transform:translate(-50%,0);animation:floaty 5.5s ease-in-out 1s infinite}
+.float-logo.on.live{transition:opacity .12s linear}
+/* phones: the same size and position whether shown or not, so it never jumps */
 @media (max-width:819px) {
-  .float-logo.on{margin-top:10%;
-  width:clamp(96px,26vw,130px)
-  }
-  
+  .float-logo{margin-top:10%;width:clamp(96px,26vw,130px)}
 }
 @keyframes floaty{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
 /* ── page 1: the monogram set a little lower, and larger type lifted toward
@@ -1316,15 +1318,19 @@ addEventListener('keydown',e=>{
 function trackHeroLogo(){
   const logo=document.getElementById('floatLogo');
   if(!logo)return;
-  let shown=null;
+  let queued=false;
   const sync=()=>{
-    // only at the very top of the page — never mid-scroll
-    const atTop=scrollY<24;
-    if(atTop!==shown){shown=atTop;logo.classList.toggle('on',atTop)}
+    queued=false;
+    const k=Math.min(1,Math.max(0,1-scrollY/(innerHeight*.33)));
+    logo.style.setProperty('--vis',k.toFixed(3));
   };
   sync();
-  addEventListener('scroll',sync,{passive:true});
-  addEventListener('resize',sync);
+  logo.classList.add('on');
+  // after its first slow fade in, it tracks the scroll closely
+  setTimeout(()=>logo.classList.add('live'),900);
+  const queue=()=>{ if(!queued){ queued=true; requestAnimationFrame(sync) } };
+  addEventListener('scroll',queue,{passive:true});
+  addEventListener('resize',queue);
 }
 
 /* ══════════ SCROLL POP ══════════ */

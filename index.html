@@ -457,7 +457,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 .music.muted .eq{display:none}
 @media (prefers-reduced-motion:reduce){.music .eq i{animation:none;height:6px}}
 
-.float-logo{position:fixed;top:max(12px,env(safe-area-inset-top));left:50%;z-index:70;
+/* sits at the top of page 1 and scrolls away with it (fading as it goes) */
+.float-logo{position:absolute;top:max(12px,env(safe-area-inset-top));left:50%;z-index:70;
   width:clamp(72px,10vw,104px);aspect-ratio:800/454;background:var(--gold);
   -webkit-mask:var(--mono-ac) center/contain no-repeat;mask:var(--mono-ac) center/contain no-repeat;
   filter:drop-shadow(0 3px 7px rgba(255,255,255,.9)) drop-shadow(0 6px 14px rgba(16,55,110,.22));

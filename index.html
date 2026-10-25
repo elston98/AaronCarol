@@ -864,6 +864,9 @@ footer .f-avec{font-family:var(--script);color:var(--gold-soft);font-size:1.35re
 .rsvp-mono{font-family:var(--caps);font-weight:600;font-size:clamp(1.05rem,1.8vw,1.3rem);letter-spacing:.34em;color:var(--navy)}
 /* set like "Holy Matrimony": navy, in the italic display face, a little smaller */
 .note.blessings{font-family:var(--caps);font-weight:600;font-style:italic;color:var(--navy);
+  /* bold, made with a hairline stroke on this line alone, so no extra font weights
+     load and the other italic headings keep their look */
+  -webkit-text-stroke:.6px currentColor;paint-order:stroke fill;
   font-size:clamp(1.4rem,3.1vw,1.95rem);line-height:1.2;letter-spacing:.02em;text-align:center;text-wrap:balance}
 .rsvp-rule{width:56px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .rsvp-title{font-family:var(--caps);font-weight:500;font-size:clamp(1.8rem,3.4vw,2.6rem);
@@ -1061,8 +1064,8 @@ footer .f-sub{font-family:var(--caps);font-weight:600;font-size:.74rem;letter-sp
             <p class="w-name">Wedding Nuptials</p>
             <p class="w-time">3:00 PM</p>
             <svg class="orn-svg" viewBox="0 0 200 14" style="width:min(52%,150px)" aria-hidden="true"><path d="M8 7h72M120 7h72"/><path d="M80 7l-9-3.4M80 7l-9 3.4M120 7l9-3.4M120 7l9 3.4"/><path d="M100 11.6c-3-2.4-5.4-4.2-5.4-6.4A2.9 2.9 0 01100 3.7a2.9 2.9 0 015.4 1.5c0 2.2-2.4 4-5.4 6.4z" fill="currentColor" stroke="none"/></svg>
-            <p class="w-venue">Our Lady of Immaculate<br>Conception Church,<br>Borivali, Mumbai</p>
-            <a class="maplink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=Our+Lady+of+Immaculate+Conception+Church+Borivali+Mumbai">
+            <p class="w-venue">Our Lady of the Immaculate<br>Conception Church,<br>I.C. Colony, Borivali West,<br>Mumbai&nbsp;&ndash;&nbsp;103</p>
+            <a class="maplink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=Our+Lady+of+the+Immaculate+Conception+Church+I.C.+Colony+Borivali+West+Mumbai+400103">
               <svg viewBox="0 0 24 24"><path d="M12 22s8-6.4 8-12a8 8 0 10-16 0c0 5.6 8 12 8 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
               Get directions</a>
           </div>
